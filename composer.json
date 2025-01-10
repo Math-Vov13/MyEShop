@@ -1,0 +1,23 @@
+{
+    "name": "myeshop/ecommerce",
+    "description": "Plateforme e-commerce pour MyEShop php",
+    "type": "project",
+    "require": {
+        "php": "^8.1",
+        "vlucas/phpdotenv": "^5.5",
+        "stripe/stripe-php": "^10.0",
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "myeshop++ Team",
+            "email": "dev@myeshop.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,86 @@
+# Activer le module de réécriture
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Rediriger vers HTTPS si nécessaire (à décommenter en production)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Si le fichier ou dossier n'existe pas physiquement
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rediriger toutes les requêtes vers index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Compression GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json
+</IfModule>
+
+# Mise en cache navigateur
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Vidéo
+    ExpiresByType video/mp4 "access plus 1 year"
+    ExpiresByType video/mpeg "access plus 1 year"
+    
+    # CSS, JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Autres
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
+
+# Protection contre les injections XSS et autres vulnérabilités
+<IfModule mod_headers.c>
+    # Désactiver le MIME-type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Protection XSS pour les anciens navigateurs
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Empêcher le site d'être affiché dans un iframe (clickjacking protection)
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Activer la politique de sécurité du contenu (CSP)
+    # À personnaliser selon vos besoins
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;"
+</IfModule>
+
+# Désactiver l'affichage du contenu des répertoires
+Options -Indexes
+
+# Empêcher l'accès aux fichiers .htaccess
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Empêcher l'accès aux fichiers cachés
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Définir le jeu de caractères par défaut
+AddDefaultCharset UTF-8
+
+# Forcer le type MIME pour les fichiers JavaScript
+AddType application/javascript .js
+
+# Forcer le type MIME pour les fichiers JSON
+AddType application/json .json

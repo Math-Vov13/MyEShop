@@ -1,0 +1,36 @@
+# Empêcher l'accès aux dossiers sensibles
+Options -Indexes
+
+# Bloquer l'accès à tous les fichiers dotfiles (fichiers commençant par un point)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protéger les fichiers sensibles
+<FilesMatch "^(composer\.json|composer\.lock|\.env|\.env\.example|README\.md|INSTRUCTIONS\.md)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Rediriger toutes les requêtes vers le dossier public
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Désactiver l'affichage des erreurs PHP
+php_flag display_errors off
+
+# Protection contre les injections XSS
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Désactiver la signature du serveur
+ServerSignature Off
