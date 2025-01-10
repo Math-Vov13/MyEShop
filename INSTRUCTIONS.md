@@ -10,7 +10,7 @@
 
 1. Cloner le repository :
 ```bash
-git clone https://github.com/Math-Vov13/NewGame_pp.git
+git clone https://github.com/Math-Vov13/MyEShop.git
 cd NewGame_pp
 ```
 

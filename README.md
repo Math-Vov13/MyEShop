@@ -117,4 +117,4 @@ Distribué sous la licence MIT. Voir `LICENSE` pour plus d'informations.
 
 ## Contact
 Vovard - MathVov.91@outlook.fr
-Lien du projet: https://github.com/Math-Vov13/NewGame_pp.git
+Lien du projet: https://github.com/Math-Vov13/MyEShop.git
